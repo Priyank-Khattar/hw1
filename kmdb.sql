@@ -102,12 +102,63 @@
 -- Drop existing tables, so you'll start fresh each time this script is run.
 -- TODO!
 
+DROP TABLE IF EXISTS Movie;
+DROP TABLE IF EXISTS Actor;
+DROP TABLE IF EXISTS Studio;
+DROP TABLE IF EXISTS Cast;
+
 -- Create new tables, according to your domain model
 -- TODO!
+
+CREATE TABLE Movie (
+    ID INTEGER PRIMARY KEY,
+    Title TEXT,
+    Released_Year INTEGER,
+    MPAA_Rating TEXT,
+    Studio_Id INTEGER 
+);
+
+CREATE TABLE Studio (
+    ID INTEGER PRIMARY KEY,
+    Studio_Name TEXT
+);
+
+CREATE TABLE Actor (
+    ID INTEGER PRIMARY KEY,
+    Actor_Name TEXT 
+);
+
+CREATE TABLE Cast (
+    ID INTEGER PRIMARY KEY,
+    Movie_Id INTEGER,
+    Studio_Id INTEGER 
+);
 
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
+
+INSERT INTO Movie (
+    Id, Title, Released_Year, MPAA_Rating, Studio_Id)
+VALUES
+(1,"Batman Begins", 2005, "PG-13", 1),
+(2, "Dark Knight", 2008, "PG-13", 1),
+(3, "Dark Knight Rises", 2012, "PG-13", 1);
+
+INSERT INTO Studio (
+    Id, Studio_Name)
+VALUES
+(1,"Warner Bros.");
+
+INSERT INTO Actor (
+    Id, Actor_Name)
+VALUES
+(1,"Christian Bale"),
+(2,"Michael Caine"),
+(3,"Liam Neeson"),
+(4,"Katie Holmes"),
+(5,"Gary Oldman");
+
 
 -- Prints a header for the movies output
 .print "Movies"
