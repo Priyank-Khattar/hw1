@@ -98,6 +98,7 @@
 -- Turns column mode on but headers off
 .mode column
 .headers off
+.width 25 25 25 25
 
 -- Drop existing tables, so you'll start fresh each time this script is run.
 -- TODO!
@@ -105,7 +106,7 @@
 DROP TABLE IF EXISTS Movie;
 DROP TABLE IF EXISTS Actor;
 DROP TABLE IF EXISTS Studio;
-DROP TABLE IF EXISTS Cast;
+DROP TABLE IF EXISTS Top_Cast;
 
 -- Create new tables, according to your domain model
 -- TODO!
@@ -124,11 +125,11 @@ CREATE TABLE Studio (
 );
 
 CREATE TABLE Actor (
-    ID INTEGER PRIMARY KEY,
+    Id INTEGER PRIMARY KEY,
     Actor_Name TEXT 
 );
 
-CREATE TABLE Cast (
+CREATE TABLE Top_Cast (
     Id INTEGER PRIMARY KEY,
     Movie_Id INTEGER,
     Actor_Id INTEGER,
@@ -143,8 +144,8 @@ INSERT INTO Movie (
     Id, Title, Released_Year, MPAA_Rating, Studio_Id)
 VALUES
 (1,"Batman Begins", 2005, "PG-13", 1),
-(2, "Dark Knight", 2008, "PG-13", 1),
-(3, "Dark Knight Rises", 2012, "PG-13", 1);
+(2, "The Dark Knight", 2008, "PG-13", 1),
+(3, "The Dark Knight Rises", 2012, "PG-13", 1);
 
 INSERT INTO Studio (
     Id, Studio_Name)
@@ -166,7 +167,7 @@ VALUES
 (10,"Joseph Gordon-Levitt"),
 (11,"Anne Hathaway");
 
-INSERT INTO Cast (
+INSERT INTO Top_Cast (
     Id, Movie_Id, Actor_Id, Character_Name)
 VALUES
 (1,1, 1, "Bruce Wayne"),
@@ -195,12 +196,19 @@ VALUES
 -- The SQL statement for the movies output
 -- TODO!
 
+SELECT Movie.Title, Movie.Released_Year, Movie.MPAA_Rating, Studio.Studio_Name
+FROM Movie INNER JOIN Studio ON Movie.Studio_Id=Studio.Id;
+
 -- Prints a header for the cast output
 .print ""
 .print "Top Cast"
 .print "========"
 .print ""
 
-
 -- The SQL statement for the cast output
 -- TODO!
+
+SELECT Movie.Title, Actor.Actor_Name, Top_Cast.Character_Name
+FROM Actor
+INNER JOIN Top_Cast ON Actor.Id=Top_Cast.Actor_Id
+INNER JOIN Movie ON Top_Cast.Movie_Id=Movie.Id;
